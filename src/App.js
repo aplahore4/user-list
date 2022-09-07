@@ -1,7 +1,26 @@
-import './App.css'
+import React, { useState, Fragment } from 'react'
+
+import AddUser from './components/Users/AddUser'
+import UsersList from './components/Users/UsersList'
 
 function App() {
-  return <div className='App'>Hello world</div>
+  const [usersList, setUsersList] = useState([])
+
+  const addUserHandler = (uName, uAge) => {
+    setUsersList((prevUsersList) => {
+      return [
+        { name: uName, age: uAge, id: Math.random().toString() },
+        ...prevUsersList,
+      ]
+    })
+  }
+
+  return (
+    <Fragment>
+      <AddUser onAddUser={addUserHandler} />
+      {usersList.length > 0 && <UsersList users={usersList} />}
+    </Fragment>
+  )
 }
 
 export default App
